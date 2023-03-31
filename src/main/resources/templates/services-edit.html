@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head  th:replace="fragments/commons::head">
+</head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation">
+</header>
+<main role="main" class="bg-secondary">
+  <div class="jumbotron">
+      <div class="container text-light text-center">
+          <h1 class="display-3"><strong class="bg-blur rounded">Edit services</strong></h1>
+      </div>
+    <div class="container bg-blur rounded p-5 mt-5 w-75">
+      <form
+              th:object = "${serviceToEdit}"
+              th:action="@{/services/{id}/edit(id=*{id})}"
+              th:method="patch"
+              class=" text-center text-light">
+
+
+
+        <!--        IMAGE URL-->
+
+        <div class="form-group row">
+          <label for="image" class="col-sm-2 col-form-label">Image URL</label>
+          <div class="col-sm-10">
+            <input th:field="*{imageUrl}" th:errorclass="is-invalid" type="text" class="form-control" id="image"
+                   aria-describedby="imageHelpInline" placeholder="put image url here">
+            <small id="imageHelpInline" class="invalid-feedback bg-danger text-light rounded">
+              Enter valid image url.
+            </small>
+          </div>
+        </div>
+
+        <!--        TITLE-->
+
+        <div class="form-group row">
+          <label for="title" class="col-sm-2 col-form-label">Title</label>
+          <div class="col-sm-10">
+            <input th:field="*{title}" th:errorclass="is-invalid" type="text" class="form-control" id="title"
+                   aria-describedby="imageHelpInline" placeholder="put title here">
+            <small id="titleHelpInline" class="invalid-feedback bg-danger text-light rounded">
+              Enter longer title.
+            </small>
+          </div>
+        </div>
+
+<!--        DESCRIPTION-->
+
+        <div class="form-group row">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+<!--            <input th:field="*{description}" th:errorclass="is-invalid" type="text" class="form-control form-control-lg" id="description"-->
+<!--                   aria-describedby="imageHelpInline" placeholder="put description about service here" rows="5">-->
+            <textarea th:field="*{description}" th:errorclass="is-invalid" class="form-control"
+                      id="description" placeholder="put description about service here"
+                      style="width: 100%; height: 300px;"></textarea>
+            <small id="descriptionHelpInline" class="invalid-feedback bg-danger text-light rounded">
+              Enter longer description.
+            </small>
+          </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-secondary w-50">Finish edit</button>
+      </form>
+      <hr class="bg-light">
+    </div>
+  </div>
+</main>
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

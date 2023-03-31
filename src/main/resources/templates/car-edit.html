@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head  th:replace="fragments/commons::head">
+</head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main role="main" class="bg-secondary">
+
+    <div class="jumbotron">
+        <div class="container text-light text-center">
+            <h1 class="display-3"><strong class="bg-blur rounded">Edt your car</strong></h1>
+        </div>
+        <div class="container bg-blur rounded p-5 mt-5 w-75">
+            <form
+                    th:object="${carToEdit}"
+                    th:action="@{/car/{id}/edit(id=*{id})}"
+                    th:method="PATCH"
+                    class=" text-center text-light">
+
+                <!--                MAKE-->
+
+                <div class="form-group row">
+                    <label for="make" class="col-sm-2 col-form-label">Make</label>
+                    <div class="col-sm-10">
+                        <input th:field="*{make}"  th:errorclass="is-invalid" type="text" class="form-control" id="make"
+                               aria-describedby="makeHelpInline" placeholder="Make">
+                        <small id="makeHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Make must be between 3 and 20 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                MODEL-->
+
+                <div class="form-group row">
+                    <label for="model" class="col-sm-2 col-form-label">Model</label>
+                    <div class="col-sm-10">
+                        <input th:field="*{model}" th:errorclass="is-invalid" type="text" class="form-control" id="model"
+                               aria-describedby="modelHelpInline" placeholder="Make">
+                        <small id="modelHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Name must be between 3 and 20 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                ENGINE-->
+
+                <div class="form-group row">
+                    <label for="engine" class="col-sm-2 col-form-label">Engine</label>
+                    <div class="col-sm-10">
+                        <select id="engine" name="engine" th:errorclass="is-invalid" class="form-control"
+                                aria-describedby="engineHelpInLine" >
+                            <option value="">Select engine</option>
+                            <option th:each="e : ${T(com.project.autoKings.model.enums.Engine).values()}"
+                                    th:text="${e}"
+                                    th:value="${e}"
+                                    th:selected="${e} == *{engine}">
+                                Engine type
+                            </option>
+                        </select>
+                        <small id="engineHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Please select engine.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                   TRANSMISSION-->
+
+                <div class="form-group row">
+                    <label for="transmission" class="col-sm-2 col-form-label">Transmission</label>
+                    <div class="col-sm-10">
+                        <!--                        change class to form-control if there is a problem-->
+                        <select   th:field="*{transmission}" id="transmission" name="transmission" class="form-control"
+                                  aria-describedby="transmissionHelpInline">
+                            <!--                            remove selected if there is a problem-->
+                            <option value="" selected>Select transmission</option>
+                            <option th:each="t : ${T(com.project.autoKings.model.enums.Transmission).values()}"
+                                    th:text="${t}"
+                                    th:value="${t}"
+                                    th:selected="${t} == *{transmission}">
+                                Transmission type
+                            </option>
+                        </select>
+                        <small id="transmissionHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Please select transmission.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                MILEAGE-->
+
+                <div class="form-group row">
+                    <label for="mileage" class="col-sm-2 col-form-label">Mileage</label>
+                    <div class="col-sm-10">
+                        <input  th:field="*{mileage}" th:errorclass="is-invalid" type="number" class="form-control" id="mileage"
+                                aria-describedby="mileageHelpInline" placeholder="Distance">
+                        <small id="mileageHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Incorrect mileage input.
+                        </small>
+                    </div>
+                </div>
+
+
+                <!--                IMAGE URL-->
+
+                <div class="form-group row">
+                    <label for="image" class="col-sm-2 col-form-label">Image URL</label>
+                    <div class="col-sm-10">
+                        <input th:field="*{imageUrl}" th:errorclass="is-invalid"  type="text" step="1" class="form-control" id="image"
+                               aria-describedby="imageHelpInline">
+                        <small id="imageHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            This is not correct image format.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                VIN-->
+
+                <div class="form-group row">
+                    <label for="vin" class="col-sm-2 col-form-label">VIN</label>
+                    <div class="col-sm-10">
+                        <input th:field="*{VIN}" th:errorclass="is-invalid"  type="text" step="1" class="form-control" id="vin"
+                               aria-describedby="vinHelpInline">
+                        <small id="vinHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Price must be positive.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-secondary w-50">Add car</button>
+
+            </form>
+            <hr class="bg-light">
+        </div>
+    </div>
+</main>
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

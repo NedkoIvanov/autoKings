@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+  <div class="jumbotron">
+    <!--        details about cars in database-->
+    <div class="d-flex justify-content-center">
+      <div class="col-12 row d-flex justify-content-center">
+        <div th:if="${noCarsAdded}">
+          <div class="container text-light text-center">
+            <h1 class="display-3"><strong class="bg-blur rounded">No</strong></h1>
+            <h1 class="display-3"><strong class="bg-blur rounded">Cars</strong></h1>
+            <h1 class="display-3"><strong class="bg-blur rounded">Available!</strong></h1>
+            <h1 class="display-3"><strong class="bg-blur rounded">If you want to add a car, <a th:href="@{/car/add}">click here</a>.</strong></h1>
+          </div>
+        </div>
+        <div th:each="c : ${car}" th:object="${c}" class="mx-3">
+          <div class="card bg-secondary" style="width: 18rem;">
+            <img th:src="*{imageUrl}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+
+              <h5  class="mt-4 mb-0">Make</h5>
+              <span th:text="*{make}"></span>
+
+              <h5 class="mt-4 mb-0">Model</h5>
+              <span th:text="*{model}"></span>
+
+              <th:block th:if="*{accepted}">
+                <h5 class="mt-4 mb-0">Accepted</h5>
+                <span>YES</span>
+
+                <h5 class="mt-4 mb-0">Mechanics responsible for this car</h5>
+                <span th:each="m, iterStat : ${c.mechanicFullName}">
+                  <span th:text="${m}"></span>
+                  <span th:if="${not iterStat.last}">,</span>
+                </span>
+              </th:block>
+
+              <th:block th:unless="*{accepted}">
+
+              </th:block>
+
+
+
+
+              <th:block th:if="${c.repairmentDays!=null}">
+                <h5 class="mt-4 mb-0">Expected repair end date</h5>
+                <span th:text="${#temporals.format(c.repairmentDays, 'dd-MM')}"></span>
+              </th:block>
+
+              <th:block th:if="${#authentication.principal.username==c.ownerName}">
+              <h5 class="mt-2 mb-0">Actions</h5>
+              <form th:action="@{/car/{id}/delete(id=*{id})}" th:method="delete">
+                <input type="submit" class="btn btn-primary btn-dark" value="Delete car"></a>
+              </form>
+
+              <th:block th:if="${c.services == null or c.services.isEmpty()} and (${c.mechanicFullName == null or c.mechanicFullName.isEmpty()})">
+              <h5 class="mt-2 mb-0"></h5>
+              <a th:href="@{/car/{id}/add/problems(id=*{id})}" class="btn btn-primary btn-dark">Add car problems</a>
+              </th:block>
+
+
+              <th:block th:if="${c.services != null and !c.services.isEmpty()} and (${c.mechanicFullName == null or c.mechanicFullName.isEmpty()})">
+                <h5 class="mt-2 mb-0"></h5>
+                <a th:href="@{/car/{id}/services(id=*{id})}" class="btn btn-primary btn-dark">Choose your mechanic</a>
+              </th:block>
+
+              <h5 class="mt-2 mb-0"></h5>
+              <a th:href="@{/car/{id}/edit(id=*{id})}" class="btn btn-primary btn-dark">Edit car</a>
+              </th:block>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+<!--</section>-->
+<footer class="container">
+  <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

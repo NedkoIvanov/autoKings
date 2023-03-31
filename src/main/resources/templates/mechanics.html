@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+    <div class="jumbotron">
+<!--        details about mechanics-->
+
+                <div th:if="${noMechanic}">
+                    <div class="container text-light text-center">
+                        <h1 class="display-3"><strong class="bg-blur rounded">At the moment,</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">we do not have</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">mechanics in this position.</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">We are very sorry!<th:block sec:authorize="!hasRole('ADMIN')"><a th:href="@{/services}">Continue</a></th:block></strong></h1>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <h1 class="display-3"><strong class="bg-blur rounded">If you want to add a mechanic, <a th:href="@{/mechanic/add}">click here</a>.</strong></h1>
+                        </th:block>
+                    </div>
+                </div>
+
+                <div th:if="${noActiveMechanics}">
+                    <div class="container text-light text-center">
+                        <h1 class="display-3"><strong class="bg-blur rounded">No active mechanics</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">in this position!</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">You can check again soon.</strong></h1>
+                        <h1 class="display-3"><strong class="bg-blur rounded">We are very sorry!<th:block sec:authorize="!hasRole('ADMIN')"><a th:href="@{/services}">Continue</a></th:block></strong></h1>
+                    </div>
+                </div>
+
+                <div th:unless="${(noMechanic != null and noMechanic) or (noActiveMechanics != null and noActiveMechanics)}">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-12 row d-flex justify-content-center">
+                <div th:each="m : ${mechanicSpecs}" th:object="${m}" class="mx-3">
+
+                        <div class="card bg-secondary" style="width: 18rem;">
+                            <img th:src="*{imageUrl}" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Full name</h5>
+                                <span th:text="*{fullName}"></span>
+
+                                <h5 class="mt-4 mb-0">Worked since</h5>
+                                <span th:text="*{workedSince}"></span>
+
+                                <h5 class="mt-4 mb-0">Phone number</h5>
+                                <span th:text="*{phoneNumber}"></span>
+
+                                <th:block th:if="${canChoose}">
+                                    <th:block th:if="${(m.chosen ?: 0) < 5}">
+                                        <h5 class="mt-4 mb-0">Cars for repairing</h5>
+                                        <span th:text="*{chosen}"></span>
+                                        <h5 class="mt-2 mb-0"></h5>
+                                        <form th:action="@{/mechanic/{id}/choose(id=*{id})}" th:method="POST" >
+                                            <button type="submit" class="btn btn-primary btn-dark mt-2">Choose</button>
+                                        </form>
+                                    </th:block>
+                                </th:block>
+
+                                <th:block th:if="*{chosen}==5">
+                                    <h5 class="mt-4 mb-0">Mechanic is not available!</h5>
+                                </th:block>
+
+                                <h5 class="mt-2 mb-0"></h5>
+                                <a th:href="@{/mechanic/{id}/comments(id=*{id})}" class="btn btn-primary btn-dark">Review</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

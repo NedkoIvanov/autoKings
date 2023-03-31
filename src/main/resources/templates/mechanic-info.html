@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+  <div class="jumbotron">
+    <!-- details about customers in database -->
+    <div class="d-flex justify-content-center">
+      <div class="col-12 row d-flex justify-content-center">
+        <div th:each="m : ${mechanics}" th:object="${m}" class="mx-3">
+          <div class="card bg-secondary" style="width: 18rem;">
+            <img th:src="*{imageUrl}" class="card-img-top" alt="...">
+            <!-- ADD th:object="${customer}" IF PROBLEM OCCUR -->
+            <div class="card-body text-center">
+              <h5 class="mt-4 mb-0">Full name</h5>
+              <span th:text="*{fullName}"></span>
+
+              <h5 class="mt-4 mb-0">Worked since</h5>
+              <span th:text="*{workedSince}"></span>
+
+              <h5 class="mt-4 mb-0">Phone number</h5>
+              <span th:text="*{phoneNumber}"></span>
+
+              <h5 class="mt-2 mb-0">Actions</h5>
+              <form th:action="@{/mechanic/{id}/delete(id=*{id})}" th:method="delete">
+                <input type="submit" class="btn btn-primary btn-dark" value="Fire mechanic"></a>
+              </form>
+              <h5 class="mt-2 mb-0"></h5>
+              <a th:href="@{/mechanic/{id}/update(id=*{id})}" class="btn btn-primary btn-dark">Update mechanic</a>
+              <h5 class="mt-2 mb-0"></h5>
+              <a th:href="@{/comments/{id}(id=*{id})}" class="btn btn-primary btn-dark">Check reviews</a>
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </main>
+
+<footer class="container">
+  <p>&copy;AutoKings 2023</p>
+</footer>
+              </body>
+              </html>

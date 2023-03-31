@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+<main role="main" class="bg-secondary">
+    <div class="jumbotron">
+
+        <div th:if="${noCustomers}">
+            <div class="container text-light text-center">
+                <h1 class="display-3"><strong class="bg-blur rounded">At the moment,</strong></h1>
+                <h1 class="display-3"><strong class="bg-blur rounded">there are not</strong></h1>
+                <h1 class="display-3"><strong class="bg-blur rounded">registered customers to your app.</strong></h1>
+            </div>
+        </div>
+
+        <div th:unless="${noCustomers!=null and noCustomers}">
+        <!-- details about customers in database -->
+        <div class="d-flex justify-content-center">
+            <div class="col-12 row d-flex justify-content-center">
+                <div th:each="c : ${customer}" th:object="${c}" class="mx-3">
+                    <div class="card bg-secondary" style="width: 18rem;">
+                        <img th:src="*{imageUrl}" class="card-img-top" alt="...">
+                        <!-- ADD th:object="${customer}" IF PROBLEM OCCUR -->
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Full name</h5>
+                            <span th:text="*{fullName}"></span>
+
+                            <h5 class="mt-4 mb-0">Email</h5>
+                            <span th:text="*{email}"></span>
+
+                            <a th:href="@{/car/info/{name}(name = *{username})}" class="btn btn-primary btn-dark">Customer's car</a>
+
+                            <h5 class="mt-2 mb-0"></h5>
+                            <th:block  sec:authorize="hasRole('ADMIN')">
+                                <form th:action="@{/users/{id}/delete(id=*{id})}" th:method="delete">
+                                    <input type="submit" class="btn btn-primary btn-dark" value="Delete customer"></a>
+                                </form>
+                            </th:block>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!--</section>-->
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+    <div class="jumbotron">
+
+        <div class="d-flex justify-content-center">
+            <div class="col-12 row d-flex justify-content-center">
+                <div th:each="c : ${serviceView}" th:object="${c}" class="mx-3">
+                    <div class="card bg-secondary" style="width: 18rem;">
+                <img  th:src="*{imageUrl}"class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title" th:text="*{title}" ></h5>
+                <p class="card-text" th:text="*{description}">Car engine mechanics are responsible for maintaining and repairing car engines. The engine is the heart of the car, providing power to the wheels and allowing it to move. We can diagnose and identify any issues with the engine, such as mechanical problems or electrical faults, and then perform the necessary repairs or maintenance to fix them. This may involve replacing faulty parts, repairing damaged components, or cleaning and servicing the engine to ensure that it is running smoothly and efficiently. We can change the oil and other fluids, replace filters, and perform other routine maintenance tasks to keep the engine in good condition. Our skilled car engine mechanics are essential for ensuring that your car runs smoothly and safely, and can help you keep your vehicle in top condition for years to come.</p>
+                <a th:href="@{/mechanic/services/{specialization}(specialization=*{services.name()})}" class="btn btn-secondary w-50">Check mechanic</a>
+                <th:block sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/services/{id}/edit(id=*{id})}"class="btn btn-secondary w-50">Edit</a>
+                </th:block>
+            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>

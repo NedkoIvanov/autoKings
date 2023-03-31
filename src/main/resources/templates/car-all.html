@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+  <div class="jumbotron">
+    <!--        details about cars in database-->
+    <div class="d-flex justify-content-center">
+          <div class="col-12 row d-flex justify-content-center">
+              <div th:each="c : ${allCars}" th:object="${c}" class="mx-3">
+          <div class="card bg-secondary" style="width: 18rem;">
+            <img th:src="*{imageUrl}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+
+              <h5  class="mt-4 mb-0">Make</h5>
+              <span th:text="*{make}"></span>
+
+              <h5 class="mt-4 mb-0">Model</h5>
+              <span th:text="*{model}"></span>
+
+              <h5 class="mt-4 mb-0">Mileage</h5>
+              <span th:text="*{mileage}"></span>
+
+              <h5 class="mt-4 mb-0">Engine</h5>
+              <span th:text="*{engine}" ></span>
+
+              <h5 class="mt-4 mb-0">Transmission</h5>
+              <span th:text="*{transmission}"></span>
+
+              <h5 class="mt-2 mb-0">Owner's name</h5>
+              <span th:text="*{fullName}" ></span>
+
+              <h5 class="mt-2 mb-0">Owner's phone</h5>
+              <span th:text="*{phoneNumber}" ></span>
+
+              <h5 class="mt-2 mb-0">VIN</h5>
+              <span th:text="*{VIN}" ></span>
+
+                <th:block th:if="*{problemDescription!=null}">
+                    <h5 class="mt-2 mb-0">Description</h5>
+                    <span th:text="*{problemDescription}" ></span>
+                </th:block>
+
+                <th:block th:if="${c.accepted}">
+                    <h5 class="mt-4 mb-0">Mechanics for your car</h5>
+                    <span th:each="m, iterStat : ${c.mechanicFullName}">
+                        <span th:text="${m}"></span>
+                        <span th:if="${not iterStat.last}">,</span>
+                    </span>
+                </th:block>
+
+              <th:block th:if="*{repairmentDays}!=null">
+                <h5 class="mt-4 mb-0">Expected repair end date</h5>
+                <span th:text="${#temporals.format(c.repairmentDays, 'dd-MM')}"></span>
+              </th:block>
+
+<!--                put edit date button in order to change the date again-->
+<!--                admin can set date when car is accepted-->
+              <th:block th:if="${c.repairmentDays==null and c.accepted!=null and c.accepted}">
+                  <form th:action="@{/car/{id}/repairment(id=${c.id})}" th:method="patch" th:object="${addDate}">
+                      <h5 class="mt-4 mb-0">Set repair end date</h5>
+                          <input th:field="*{repairmentDays}" th:error="is-invalid" type="date" step="1" class="form-control" id="date"
+                                 aria-describedby="dateTimeHelpInline">
+                          <small id="dateTimeHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                              Date is in the future.
+                          </small>
+                  <button type="submit" class="btn btn-primary btn-dark">Set</button>
+                  </form>
+              </th:block>
+
+              <h5 class="mt-2 mb-0">Actions</h5>
+              <form th:action="@{/car/{id}/delete(id=*{id})}" th:method="delete">
+                <input type="submit" class="btn btn-primary btn-dark" value="Delete car"></a>
+              </form>
+
+
+                <th:block th:if="*{repairmentDays}!=null">
+                    <h5 class="mt-2 mb-0"></h5>
+                    <form th:action="@{/car/{id}/change(id=*{id})}" th:method="patch">
+                        <input type="submit" class="btn btn-primary btn-dark" value="Change repairment date"></a>
+                    </form>
+                </th:block>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/commons::head"></head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation"></header>
+
+<main role="main" class="bg-secondary">
+  <div class="jumbotron">
+
+    <div class="d-flex justify-content-center">
+      <div class="col-12 row d-flex justify-content-center">
+        <th:block th:if="${mechanicsWereChosen}">
+          <div class="container text-light text-center">
+            <h1 class="display-3"><strong class="bg-blur rounded">All problems</strong></h1>
+            <h1 class="display-3"><strong class="bg-blur rounded">are going to be</strong></h1>
+            <h1 class="display-3"><strong class="bg-blur rounded">solved!</strong></h1>
+          </div>
+        </th:block>
+        <th:block th:unless="${mechanicsWereChosen}">
+          <div th:object="${carServiceView[0]}" class="mx-3">
+            <div class="card bg-secondary" style="width: 18rem;">
+              <img  th:src="*{imageUrl}"class="card-img-top" alt="...">
+              <div class="card-body text-center">
+                <h5 class="card-title" th:text="*{title}" ></h5>
+                <a th:href="@{/mechanic/services/{specialization}(specialization=*{services.name()})}" class="btn btn-primary">Check mechanic</a>
+              </div>
+
+            </div>
+          </div>
+        </th:block>
+      </div>
+    </div>
+  </div>
+</main>
+

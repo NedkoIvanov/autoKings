@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head  th:replace="fragments/commons::head">
+</head>
+<body class="bg-secondary">
+<header th:replace="fragments/commons::navigation">
+
+</header>
+<main role="main" class="bg-secondary">
+
+    <div class="jumbotron">
+        <div class="container text-light text-center">
+            <h1 class="display-3"><strong class="bg-blur rounded">Add car problems</strong></h1>
+        </div>
+        <div class="container bg-blur rounded p-5 mt-5 w-75">
+            <form
+                    th:object="${carAddProblem}"
+                    th:action="@{/car/{id}/add/problems(id=${id})}"
+                    th:method="PATCH"
+                    class=" text-center text-light">
+
+                <!--                SERVICE TYPE-->
+
+                <div class="form-group row">
+                    <label for="service" class="col-sm-2 col-form-label">Service</label>
+                    <div class="col-sm-10">
+                        <select id="service"
+                                th:name="service"
+                                class="form-control"
+                                aria-describedby="serviceHelpInline"
+                                data-mdb-clear-button="true"
+                                multiple>
+                            <option value="" selected>Select service type</option>
+                            <option th:each="s : ${T(com.project.autoKings.model.enums.Services).values()}"
+                                    th:text="${s}"
+                                    th:value="${s}"
+                                    th:selected="${s} == *{services}">
+                                Service type
+                            </option>
+                        </select>
+                        <small id="serviceHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            You must select the category.
+                        </small>
+                    </div>
+                </div>
+
+                <!--                PROBLEM-->
+
+                <div class="form-group row">
+                    <label for="problem" class="col-sm-2 col-form-label">Problem</label>
+                    <div class="col-sm-10">
+                        <input  th:field="*{problemDescription}" th:errorclass="is-invalid"
+                                type="text" class="form-control" id="problem"
+                                aria-describedby="mileageHelpInline" placeholder="Problem">
+                        <small id="problemHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                            Out of symbol requirements.
+                        </small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-secondary w-50">Add problem</button>
+
+            </form>
+            <hr class="bg-light">
+        </div>
+    </div>
+</main>
+<footer class="container">
+    <p>&copy;AutoKings 2023</p>
+</footer>
+</body>
+</html>
