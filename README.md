@@ -5,4 +5,4 @@ The application consists of users who can register, login and logout. To ensure 
 activities that can be performed in the service, which are added from the administrator. The idea is that the customer has a personal profile and can add his car or cars,
 describing the problems that need to be fixed. After a car is registered, the customer can choose which mechanic is responsible for repairing his car. To make 
 this choice easier, everyone has an opinion about each mechanic, which is indicated by other customers. 
-Mechanics specialize in one or more things related to repairing cars.
+Mechanics specialize in one or more things related to repairing cars.After the customer has added their car along with its problems and selected the mechanic responsible for the repair, the administrator schedules an approximate date for the completion of the repair, which can be changed later. Once the repair end date arrives, the car is automatically marked as completed and the customer is ready to add new issues in the future.
