@@ -93,6 +93,7 @@ public class UserController {
         return "profile";
     }
 
+
     //CUSTOMERS INFO FOR ADMIN
 
     @GetMapping("/customer")
@@ -128,8 +129,7 @@ public class UserController {
     @PatchMapping("/{id}/edit")
     public String editUser(@PathVariable Long id,
                            @ModelAttribute @Valid EditUserProfileBindingModel editUserProfileBindingModel,
-                           BindingResult bindingResult,
-                           Principal principal){
+                           BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "redirect:/users/{id}/edit";
         }

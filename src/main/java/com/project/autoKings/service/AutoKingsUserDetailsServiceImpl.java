@@ -1,5 +1,6 @@
 package com.project.autoKings.service;
 
+import com.project.autoKings.model.entity.RoleEntity;
 import com.project.autoKings.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,7 @@ public class AutoKingsUserDetailsServiceImpl implements UserDetailsService {
                 .stream()
                 .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getRole().name()))
                 .collect(Collectors.toList());
+
 
         return new User(userEntity.getUsername(),userEntity.getPassword(),authorities);
     }

@@ -72,32 +72,6 @@ async function postFormDataAsJson({url, formData}) {
 }
 
 
-//function asComment(c) {
-//  let formatter = new Intl.DateTimeFormat('en', {
-//    day: 'numeric',
-//    month: 'short',
-//    hour: 'numeric',
-//    minute: 'numeric'
-//  });
-//
-//
-//let commentHtml = `<div id="commentsCtnr-${c.id}" class="card my-3" style="border: 20px solid black; border-radius: 60px; padding: 10px;">`;
-//commentHtml += `<div class="card-body bg-light">`;
-//commentHtml += `<div class="d-flex align-items-center">`;
-//commentHtml += `<img class="rounded-circle shadow-1-strong me-3" src=${c.authorImage} alt="avatar" width="65" height="65" />`;
-//commentHtml += `<h4>${c.authorName}</h4>`;
-//commentHtml += `</div>`;
-//commentHtml += `<p class="my-3">${c.textContent}</p>`;
-//commentHtml += `<p class="text-muted">${formatter.format(new Date(c.created))}</p>`;
-//commentHtml += `</div>`;
-//commentHtml += `</div>`;
-//
-//
-//
-//
-//
-//  return commentHtml;
-//}
 
 
 function asComment(c) {

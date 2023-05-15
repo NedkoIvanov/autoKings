@@ -119,7 +119,8 @@ public class MechanicsController {
 
     @PostMapping("/{id}/choose")
     public String chooseMechanic(@PathVariable Long id,
-                                 Principal principal){
+                                 Principal principal
+    ){
 
         CarServiceModel newestCar = this.carService.findNewestCar(principal.getName());
         this.mechanicService.chooseForServicing(id,newestCar);
